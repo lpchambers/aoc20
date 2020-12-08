@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import copy
+
 with open('input') as f:
     lines = f.readlines()
 
@@ -13,9 +15,8 @@ def run(insts):
     visited = []
     while ip not in visited:
         visited.append(ip)
-        #if ip < 0 or ip >= len(insts):
-        #    return (acc, False)
-        #    break
+        if ip < 0 or ip >= len(insts):
+            break
         op, val = insts[ip]
         if op == "nop":
             ip += 1
@@ -28,9 +29,10 @@ def run(insts):
         return (acc, True)
     return (acc, False)
 
-print(run(insts))
+print(run(insts)[0])
+
 for idx, _ in enumerate(insts):
-    itest = insts.copy()
+    itest = copy.deepcopy(insts)
     if itest[idx][0] == "nop":
         itest[idx][0] = "jmp"
     elif itest[idx][0] == "jmp":
