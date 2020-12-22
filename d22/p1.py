@@ -47,7 +47,7 @@ print(get_points(winner))
 p1 = realp1
 p2 = realp2
 
-def recur_combat(p1, p2):
+def recur_combat(p1, p2, debug=""):
     # Return True for P1 win
     # Return False for P2 win
 
@@ -58,6 +58,8 @@ def recur_combat(p1, p2):
         h2 = tuple(p2)
         s = (h1, h2)
         if s in states:
+            if debug:
+                print(f"{debug}Same hand, p1 win")
             return True, p1
 
         states.add(s)
@@ -68,7 +70,7 @@ def recur_combat(p1, p2):
             # Subgame
             subp1 = p1.copy()[:c1]
             subp2 = p2.copy()[:c2]
-            if recur_combat(subp1, subp2)[0]:
+            if recur_combat(subp1, subp2, debug + " ")[0]:
                 # P1 win
                 p1.append(c1)
                 p1.append(c2)
@@ -84,11 +86,15 @@ def recur_combat(p1, p2):
                 p2.append(c2)
                 p2.append(c1)
     if p1:
+        if debug:
+            print(f"{debug}P1 win")
         return True, p1
     else:
+        if debug:
+            print(f"{debug}P2 win")
         return False, p2
 
-win, deck = recur_combat(p1, p2)
+win, deck = recur_combat(p1, p2, "|")
 print(win)
 print(deck)
 print(get_points(deck))
