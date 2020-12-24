@@ -83,6 +83,7 @@ for _ in range(100):
             if p not in white:
                 white.add(p)
 
+    # Apply rules
     for b in black:
         num = num_around(b, black)
         if num == 0 or num > 2:
